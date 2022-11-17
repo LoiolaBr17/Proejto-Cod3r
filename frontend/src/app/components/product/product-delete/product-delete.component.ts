@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { ProductService } from './../product.service';
+import { Product } from './../product.module';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDeleteComponent implements OnInit {
 
-  constructor() { }
+  product!: Product
+
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    const id = '1'
+    this.productService.readById(id).subscribe(product => {
+      this.product = product
+    })
   }
 
+  deleteProduct(): void{}
+
+  cancel(): void{
+    this.router.navigate(['/products'])
+  }
 }
